@@ -1,0 +1,152 @@
+import React, { useState } from "react";
+import { Formik } from "formik";
+
+
+const Form = () => {
+  const [newTodo, setNewTodo] = useState("");
+  const [todos, setTodos] = useState([]);
+
+
+  const saveInfo = () => {
+    fetch("http://localhost:8080/products", {
+      method: "POST",
+      headers: {  
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        title: newTodo,
+        isCompleted: false,
+      }),
+    })
+      .then((r) => r.json())
+      .then((d) => {
+        setTodos([...todos, d]);
+        setNewTodo("");
+      });
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:8080/products")
+      .then((r) => r.json())
+      .then((d) => {
+        console.log(d);
+        setTodos(d);
+      });
+  }, []);
+
+
+
+   return (
+    <>
+   <h1> Product Add Form</h1>
+  
+   <Formik
+     initialValues={{
+       name: "",
+       quantity: "",
+       price: "",
+       image: "",
+       description: "",
+       category: "",
+     }}
+     onSubmit={(values, actions) => {
+       JSON.stringify(values, null, 2);
+       actions.setSubmitting(false);
+       console.log(values);
+     }}
+   >
+     {(props) => (
+       <form onSubmit={props.handleSubmit}>
+         <input
+           type="text"
+
+           onBlur={props.handleBlur}
+           value={newTodo}
+            onChange={({target}) => setNewTodo(target.value)}
+
+          
+           name="name"
+           placeholder="Product Name"
+         />
+         <br></br>
+         <input
+           type="number"
+           placeholder="Quantity"
+        
+           onBlur={props.handleBlur}
+           value={newTodo}
+            onChange={({target}) => setNewTodo(target.value)}
+
+          
+           name="quantity"
+         />
+         <br></br>
+         <input
+           type="number"
+           placeholder="Product Price"
+         
+           onBlur={props.handleBlur}
+           value={newTodo}
+            onChange={({target}) => setNewTodo(target.value)}
+
+           
+           name="price"
+         />
+         <br></br>
+         <input
+           type="url"
+           placeholder="Enter URL"
+      
+           onBlur={props.handleBlur}
+           value={newTodo}
+            onChange={({target}) => setNewTodo(target.value)}
+
+           
+           name="image"
+         />
+         <br></br>
+         <input
+           type="text"
+           placeholder="Product Description"
+         
+           onBlur={props.handleBlur}
+           value={newTodo}
+            onChange={({target}) => setNewTodo(target.value)}
+
+          
+           name="description"
+         />
+         <br></br>
+         <input
+           type="text"
+           placeholder="Product Category"
+          
+           onBlur={props.handleBlur}
+           value={newTodo}
+            onChange={({target}) => setNewTodo(target.value)}
+
+         
+           name="category"
+         />
+         <br></br>
+         {props.errors.name && <div id="feedback">{props.errors.name}</div>}
+         <button type="submit" onClick={saveInfo}>Submit</button>
+       </form>
+     )}
+
+{todos.map((todo) => (
+          <div key={todo.id}>{todo.title}</div> 
+        ))}
+   </Formik>
+
+
+
+    </>
+  )
+}
+
+export default Form
+
+
+
+

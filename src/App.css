@@ -1,0 +1,44 @@
+.App {
+  text-align: center;
+}
+
+.flex{
+  display: flex;
+  gap: 10%;
+  cursor: pointer;
+}
+.white{
+  color: white;
+}
+.div{
+  
+  border: solid 1px black;
+  display: flex;
+  gap: 4%;
+ 
+  margin:auto;
+  justify-content: center;
+  
+}
+.bar{
+  overflow-y: scroll;
+  border: solid 2px black;
+  margin:auto;
+  height: 350px;
+  width: 80%;
+}
+
+.div>h4{
+  text-align: center;
+  justify-content: center;
+}
+.pad{
+  padding: 5px;
+  width: 250px;
+  border-radius: 5px;
+}
+.pa{
+  padding: 5px;
+  width: 265px;
+  border-radius: 5px;
+}
